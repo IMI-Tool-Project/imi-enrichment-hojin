@@ -1,0 +1,227 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>imi-enrichment-hojin</title>
+  <style>
+    pre {
+      background: black;
+      color: white;
+      padding: 0.5em;
+      white-space: pre-wrap;
+      margin: 0;
+    }
+
+    body>div {
+      max-width: 800px;
+      margin: 0.5em auto;
+    }
+
+    textarea {
+      width: 100%;
+      display: block;
+    }
+
+    dt {
+      font-weight: bold;
+      margin-top: 0.25em;
+    }
+
+    code {
+      background: #ccc;
+      padding: 0.2em
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>imi-enrichment-hojin</h1>
+
+    <p>このページは imi-enrichment-hojin の WebAPI の動作確認ページです。</p>
+
+    <h1>動作確認</h1>
+    <p><b>変換</b> ボタンを押すとこのブラウザから実際に WebAPI を実行して結果を表示します</p>
+    <dl>
+      <dt>法人番号(2～9ではじまる13桁数字)</dt>
+      <dd><input value="4000012090001" id="text" style="width:15em;"/> <button id="textButton">変換</button></dd>
+      <dt>JSON</dt>
+      <dd><textarea rows="10" id="json">{"@type":"法人型","ID":{"識別値":"4000012090001"}}</textarea> <button id="jsonButton">変換</button></dd>
+      <dt>実行結果</dt>
+      <dd>
+        <textarea rows="10" id="result">ここに実行結果が表示されます</textarea>
+      </dd>
+    </dl>
+
+    <h1>使用方法</h1>
+
+    <p>現在表示されている URL に <code>POST</code> メソッドを使って法人番号文字列 または JSON を送信すると変換結果の JSON が出力されます。</p>
+
+    <h2>curl</h2>
+    <p>法人番号文字列を変換する場合には <code>Content-Type: text/plain</code> を指定して <code>POST</code> します</p>
+    <pre>
+$ curl -X POST -H 'Content-Type: text/plain' -d '4000012090001' __ENDPOINT__
+{
+  "@context": "https://imi.go.jp/ns/core/context.jsonld",
+  "@type": "法人型",
+  "組織種別": {
+    "@type": "コード型",
+    "コード種別": {
+      "@type": "コードリスト型",
+      "表記": "法人種別"
+    },
+    "識別値": "101",
+    "表記": "国の機関"
+  },
+  "ID": {
+    "@type": "ID型",
+    "体系": {
+      "@type": "ID体系型",
+      "表記": "法人番号"
+    },
+    "識別値": "4000012090001"
+  },
+  "表記": "経済産業省",
+  "名称": {
+    "@type": "名称型",
+    "表記": "経済産業省",
+    "ローマ字表記": "Ministry of Economy, Trade and Industry",
+    "カナ表記": "ケイザイサンギョウショウ"
+  },
+  "住所": [
+    {
+      "@type": "住所型",
+      "種別": "国内所在地",
+      "表記": "東京都 千代田区 霞が関１丁目３－１",
+      "郵便番号": "1000013",
+      "都道府県": "東京都",
+      "都道府県コード": "http://data.e-stat.go.jp/lod/sac/C13000",
+      "市区町村": "千代田区",
+      "市区町村コード": "http://data.e-stat.go.jp/lod/sac/C13101"
+    },
+    {
+      "@type": "住所型",
+      "種別": "国内所在地(英語表記)",
+      "表記": "1-3-1, Kasumigaseki, Chiyoda ku, Tokyo",
+      "都道府県": "Tokyo"
+    }
+  ]
+}
+</pre>
+
+    <p>JSON を変換する場合には <code>Content-Type: application/json</code> を指定して <code>POST</code> します</p>
+    <pre>
+$ curl -X POST -H 'Content-Type: application/json' -d '{"@type":"法人型","ID":{"識別値":"4000012090001"}}' __ENDPOINT__
+{
+  "@type": "法人型",
+  "組織種別": {
+    "@type": "コード型",
+    "コード種別": {
+      "@type": "コードリスト型",
+      "表記": "法人種別"
+    },
+    "識別値": "101",
+    "表記": "国の機関"
+  },
+  "ID": {
+    "@type": "ID型",
+    "体系": {
+      "@type": "ID体系型",
+      "表記": "法人番号"
+    },
+    "識別値": "4000012090001"
+  },
+  "表記": "経済産業省",
+  "名称": {
+    "@type": "名称型",
+    "表記": "経済産業省",
+    "ローマ字表記": "Ministry of Economy, Trade and Industry",
+    "カナ表記": "ケイザイサンギョウショウ"
+  },
+  "住所": [
+    {
+      "@type": "住所型",
+      "種別": "国内所在地",
+      "表記": "東京都 千代田区 霞が関１丁目３－１",
+      "郵便番号": "1000013",
+      "都道府県": "東京都",
+      "都道府県コード": "http://data.e-stat.go.jp/lod/sac/C13000",
+      "市区町村": "千代田区",
+      "市区町村コード": "http://data.e-stat.go.jp/lod/sac/C13101"
+    },
+    {
+      "@type": "住所型",
+      "種別": "国内所在地(英語表記)",
+      "表記": "1-3-1, Kasumigaseki, Chiyoda ku, Tokyo",
+      "都道府県": "Tokyo"
+    }
+  ]
+}
+</pre>
+
+    <h2>browser</h2>
+    <p>法人番号文字列を変換する場合には <code>Content-Type: text/plain</code> を指定して <code>POST</code> します</p>
+    <pre>
+fetch("__ENDPOINT__", {
+  method: "POST",
+  headers: {
+    "Content-Type": "text/plain"
+  },
+  body: "4000012090001"
+}).then(function(response) {
+  return response.ok ? response.json() : response.text();
+}).then(function(result) {
+  console.log(result);
+});
+</pre>
+
+    <p>JSON を変換する場合には <code>Content-Type: application/json</code> を指定して <code>POST</code> します</p>
+
+    <pre>
+fetch("__ENDPOINT__", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: '{"@type":"法人型","ID":{"識別値":"4000012090001"}}'
+}).then(function(response) {
+  return response.ok ? response.json() : response.text();
+}).then(function(result) {
+  console.log(result);
+});
+</pre>
+  </div>
+  <script>
+    function $(id) {
+      return document.getElementById(id);
+    }
+
+    function send(contentType, body) {
+      fetch(location.href, {
+        method: "POST",
+        headers: {
+          "Content-Type": contentType
+        },
+        body: body
+      }).then(function(response) {
+        return response.ok ? response.json() : response.text();
+      }).then(function(obj) {
+        $("result").textContent = typeof obj === 'string' ? obj : JSON.stringify(obj, null, 2);
+      });
+    }
+
+    Array.from(document.getElementsByTagName("pre")).forEach(function(e) {
+      e.textContent = e.textContent.replace("__ENDPOINT__", location.href);
+    });
+
+    $("textButton").addEventListener("click", function() {
+      send("text/plain; charset=utf-8", $("text").value);
+    });
+
+    $("jsonButton").addEventListener("click", function() {
+      send("application/json", $("json").value);
+    });
+  </script>
+</body>
+
+</html>
