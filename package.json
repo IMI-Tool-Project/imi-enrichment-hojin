@@ -21,14 +21,22 @@
   "license": "MIT",
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^6.2.2",
+    "mocha": "^6.2.3",
     "node-fetch": "^2.6.0",
-    "papaparse": "^5.1.0"
+    "papaparse": "^5.2.0"
   },
   "dependencies": {
     "command-line-args": "^5.1.1",
     "command-line-usage": "^6.1.0",
     "leveldown": "^5.4.1",
     "levelup": "^4.3.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IMI-Tool-Project/imi-enrichment-hojin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IMI-Tool-Project/imi-enrichment-hojin/issues"
+  },
+  "homepage": "https://github.com/IMI-Tool-Project/imi-enrichment-hojin#readme"
 }
