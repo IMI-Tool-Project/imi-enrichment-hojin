@@ -99,14 +99,20 @@
 
 # 利用者向け情報
 
-以下の手順はパッケージアーカイブ `imi-enrichment-hojin-2.0.0.tgz` を用いて実行します。
+`imi-enrichment-hojin` は node.js のモジュールですが、
+動作のためには後述の環境構築の手順によってバンドルデータベースを構築する必要があります。
+
+簡便な動作確認のために、バンドルデータベースを同梱したパッケージアーカイブが
+[gBizInfo: IMI コンポーネントツール](https://info.gbiz.go.jp/tools/imi_tools/index.html) のページにて公開されています。
+
+以下の手順は同ページで公開されているパッケージアーカイブ `imi-enrichment-hojin-2.0.0.tgz` を用いて実行します。
 
 ## インストール
 
 以下の手順でインストールします。
 
 ```
-$ npm install imi-enrichment-hojin-2.0.0.tgz
+$ npm install https://info.gbiz.go.jp/tools/imi_tools/resource/imi-enrichment-hojin/imi-enrichment-hojin-2.0.0.tgz
 ```
 
 ## コマンドラインインターフェイス
@@ -117,7 +123,7 @@ $ npm install imi-enrichment-hojin-2.0.0.tgz
 コマンドラインインターフェイスのファイルの実体は `bin/cli.js` です。
 
 ```
-$ npm install imi-enrichment-hojin-2.0.0.tgz
+$ npm install https://info.gbiz.go.jp/tools/imi_tools/resource/imi-enrichment-hojin/imi-enrichment-hojin-2.0.0.tgz
 
 # ヘルプの表示
 $ imi-enrichment-hojin -h
@@ -136,7 +142,7 @@ $ imi-enrichment-hojin -s 4000012090001 > output.json
 または `npx` を使って以下のようにインストールせずに実行することも可能です。
 
 ```
-$ npx imi-enrichment-hojin-2.0.0.tgz -s 4000012090001
+$ npx https://info.gbiz.go.jp/tools/imi_tools/resource/imi-enrichment-hojin/imi-enrichment-hojin-2.0.0.tgz -s 4000012090001
 ```
 
 ## Web API
@@ -149,7 +155,7 @@ $ npx imi-enrichment-hojin-2.0.0.tgz -s 4000012090001
 以下のように `bin/server.js` を実行することで起動できます。
 
 ```
-$ npm install imi-enrichment-hojin-2.0.0.tgz
+$ npm install https://info.gbiz.go.jp/tools/imi_tools/resource/imi-enrichment-hojin/imi-enrichment-hojin-2.0.0.tgz
 $ node node_modules/imi-enrichment-hojin/bin/server.js
 Usage: node server.js [port number]
 
@@ -288,8 +294,6 @@ convert("4000012090001").then(json=>{
 
 # 開発者向け情報
 
-以下の手順はソースコードアーカイブ `imi-enrichment-hojin-2.0.0.src.tgz` を用いて実行します。
-
 ## 準備
 
 [国税庁法人番号公表サイト・全件データのダウンロード（各都道府県別）](https://www.houjin-bangou.nta.go.jp/download/zenken/) から
@@ -302,9 +306,8 @@ convert("4000012090001").then(json=>{
 以下の手順で環境を構築します。
 
 ```
-$ mkdir imi-enrichment-hojin
+$ git clone https://github.com/IMI-Tool-Project/imi-enrichment-hojin.git
 $ cd imi-enrichment-hojin
-$ tar xvzf /tmp/imi-enrichment-hojin-2.0.0.src.tgz
 $ npm install
 $ mkdir cache
 $ cp /tmp/zenken/*.zip cache
